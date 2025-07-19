@@ -1,0 +1,251 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>AttendPro | Dark Theme Attendance System</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/particles.js@2.0.0/particles.min.js"></script>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+    <!-- Particle Background -->
+    <div id="particles-js"></div>
+    
+    <!-- Header -->
+    <header class="header">
+        <div class="logo">
+            <i class="fas fa-fingerprint"></i>
+            <span>AttendPro</span>
+        </div>
+        
+        <ul class="nav-links">
+            <li><a href="#" class="active">Dashboard</a></li>
+            <li><a href="#">Employees</a></li>
+            <li><a href="#">Attendance</a></li>
+            <li><a href="#">Reports</a></li>
+            <li><a href="#">Settings</a></li>
+        </ul>
+        
+        <div class="user-info">
+            <div class="notification">
+                <i class="fas fa-bell"></i>
+            </div>
+            <div class="user-avatar">AJ</div>
+        </div>
+    </header>
+    
+    <!-- Main Content -->
+    <div class="container">
+        <div class="dashboard-title fade-in">
+            <h1>Employee Attendance Dashboard</h1>
+            <p>Track and manage your team's attendance in real-time with advanced analytics and reporting</p>
+        </div>
+        
+        <!-- Stats Grid -->
+        <div class="stats-grid">
+            <div class="stat-card present fade-in delay-1">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-title">Present Today</div>
+                        <div class="stat-value" id="presentCount">142</div>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="fas fa-user-check"></i>
+                    </div>
+                </div>
+                <div class="stat-change change-up">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>12% from yesterday</span>
+                </div>
+            </div>
+            
+            <div class="stat-card absent fade-in delay-2">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-title">Absent Today</div>
+                        <div class="stat-value" id="absentCount">8</div>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="fas fa-user-times"></i>
+                    </div>
+                </div>
+                <div class="stat-change change-down">
+                    <i class="fas fa-arrow-down"></i>
+                    <span>3% from yesterday</span>
+                </div>
+            </div>
+            
+            <div class="stat-card late fade-in delay-3">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-title">Late Arrivals</div>
+                        <div class="stat-value" id="lateCount">15</div>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="fas fa-user-clock"></i>
+                    </div>
+                </div>
+                <div class="stat-change change-up">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>5% from yesterday</span>
+                </div>
+            </div>
+            
+            <div class="stat-card remote fade-in delay-4">
+                <div class="stat-header">
+                    <div>
+                        <div class="stat-title">Remote Workers</div>
+                        <div class="stat-value" id="remoteCount">22</div>
+                    </div>
+                    <div class="stat-icon">
+                        <i class="fas fa-laptop-house"></i>
+                    </div>
+                </div>
+                <div class="stat-change change-up">
+                    <i class="fas fa-arrow-up"></i>
+                    <span>18% from last week</span>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Charts Section -->
+        <div class="charts-grid">
+            <div class="chart-container fade-in">
+                <div class="chart-header">
+                    <div class="chart-title">Weekly Attendance Overview</div>
+                    <div class="chart-actions">
+                        <button class="chart-btn active" data-period="week">Week</button>
+                        <button class="chart-btn" data-period="month">Month</button>
+                        <button class="chart-btn" data-period="quarter">Quarter</button>
+                    </div>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="attendanceChart"></canvas>
+                </div>
+            </div>
+            
+            <div class="chart-container fade-in">
+                <div class="chart-header">
+                    <div class="chart-title">Attendance Distribution</div>
+                    <div class="chart-actions">
+                        <button class="chart-btn active" data-dist="today">Today</button>
+                        <button class="chart-btn" data-dist="week">Week</button>
+                    </div>
+                </div>
+                <div class="chart-wrapper">
+                    <canvas id="distributionChart"></canvas>
+                </div>
+            </div>
+        </div>
+        
+        <!-- Employee List -->
+        <div class="employee-section fade-in">
+            <div class="section-header">
+                <div class="section-title">Recent Attendance Records</div>
+                <div class="search-box">
+                    <i class="fas fa-search"></i>
+                    <input type="text" id="searchInput" placeholder="Search employees...">
+                </div>
+            </div>
+            
+            <table class="employee-table">
+                <thead>
+                    <tr>
+                        <th>Employee</th>
+                        <th>Department</th>
+                        <th>Check-in</th>
+                        <th>Check-out</th>
+                        <th>Status</th>
+                        <th>Actions</th>
+                    </tr>
+                </thead>
+                <tbody id="employeeTableBody">
+                    <!-- Employee rows will be populated by JavaScript -->
+                </tbody>
+            </table>
+        </div>
+    </div>
+    
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-logo">
+                <div class="logo">
+                    <i class="fas fa-fingerprint"></i>
+                    <span>AttendPro</span>
+                </div>
+                <p class="footer-description">
+                    Modern attendance management system for the digital workforce.
+                    Streamline your employee tracking with our powerful analytics.
+                </p>
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-facebook-f"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                </div>
+            </div>
+
+            <div class="footer-links">
+                <div class="footer-column">
+                    <h3 class="footer-heading">Product</h3>
+                    <ul>
+                        <li><a href="#">Features</a></li>
+                        <li><a href="#">Pricing</a></li>
+                        <li><a href="#">Integrations</a></li>
+                        <li><a href="#">Updates</a></li>
+                        <li><a href="#">Mobile App</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3 class="footer-heading">Company</h3>
+                    <ul>
+                        <li><a href="#">About Us</a></li>
+                        <li><a href="#">Careers</a></li>
+                        <li><a href="#">Blog</a></li>
+                        <li><a href="#">Press</a></li>
+                        <li><a href="#">Contact</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3 class="footer-heading">Resources</h3>
+                    <ul>
+                        <li><a href="#">Documentation</a></li>
+                        <li><a href="#">Help Center</a></li>
+                        <li><a href="#">Webinars</a></li>
+                        <li><a href="#">Community</a></li>
+                        <li><a href="#">API Reference</a></li>
+                    </ul>
+                </div>
+
+                <div class="footer-column">
+                    <h3 class="footer-heading">Legal</h3>
+                    <ul>
+                        <li><a href="#">Privacy Policy</a></li>
+                        <li><a href="#">Terms of Service</a></li>
+                        <li><a href="#">Cookie Policy</a></li>
+                        <li><a href="#">GDPR</a></li>
+                        <li><a href="#">Compliance</a></li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-bottom">
+            <div class="copyright">
+                &copy; 2025 AttendPro. All rights reserved.
+            </div>
+            <div class="footer-cta">
+                <button class="btn btn-primary">Request Demo</button>
+                <button class="btn btn-secondary">Contact Sales</button>
+            </div>
+        </div>
+    </footer>
+    
+    <script src="script.js"></script>
+</body>
+</html>
